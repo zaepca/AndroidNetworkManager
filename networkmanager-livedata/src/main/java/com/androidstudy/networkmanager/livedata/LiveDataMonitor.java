@@ -1,6 +1,7 @@
 package com.androidstudy.networkmanager.livedata;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.androidstudy.networkmanager.Monitor;
 import com.androidstudy.networkmanager.Status;
@@ -10,5 +11,7 @@ import com.androidstudy.networkmanager.Status;
  */
 
 public abstract class LiveDataMonitor implements Monitor {
-    protected LiveData<Status> status;
+    protected MutableLiveData<Status> statusLiveData;
+
+    public abstract LiveData<Status> liveStatus();
 }

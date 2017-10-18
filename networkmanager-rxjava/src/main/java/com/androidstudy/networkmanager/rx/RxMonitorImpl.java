@@ -9,6 +9,9 @@ import android.net.ConnectivityManager;
 import com.androidstudy.networkmanager.NetworkUtil;
 import com.androidstudy.networkmanager.Status;
 
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+
 /**
  * Created by chweya on 10/10/17.
  */
@@ -38,6 +41,11 @@ public class RxMonitorImpl extends RxMonitor {
 
     public RxMonitorImpl(Context context) {
         this(context, -1);
+    }
+
+    @Override
+    public Flowable<Status> stream() {
+        return subject.toFlowable(BackpressureStrategy.LATEST);
     }
 
     private void emitEvent() {
