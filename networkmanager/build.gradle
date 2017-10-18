@@ -5,7 +5,7 @@ publish {
 
     groupId = 'com.github.jumadeveloper'
     artifactId = 'networkmanager'
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.2'
     desc = 'A library to check various types of network connections, to allow an app check internet connectivity status before making HTTP Requests.'
     licences = ['Apache-2.0']
     repoName = 'network-manager'
@@ -35,9 +35,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0', {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     testCompile 'junit:junit:4.12'
 }

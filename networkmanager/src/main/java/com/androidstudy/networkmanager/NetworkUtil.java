@@ -1,8 +1,9 @@
-package com.androidstudy.networkmanager.internal;
+package com.androidstudy.networkmanager;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -29,10 +30,12 @@ public class NetworkUtil {
      * @param context to get NetworkInfo
      * @return {@link NetworkInfo}
      */
+    @Nullable
     public static NetworkInfo getNetworkInfo(Context context) {
         try {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            return cm.getActiveNetworkInfo();
+            if (cm != null) return cm.getActiveNetworkInfo();
+            else return null;
         } catch (Exception e) {
             System.out.println("CheckConnectivity Exception: " + e.getMessage());
             Log.v("connectivity", e.toString());
@@ -93,6 +96,14 @@ public class NetworkUtil {
     public static boolean isConnectedToMobile(Context context) {
         NetworkInfo info = getNetworkInfo(context);
         return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
+    }
+
+    public static int[] networkType(Context context) {
+        NetworkInfo info = getNetworkInfo(context);
+        if (info != null && info.isConnectedOrConnecting())
+            return new int[]{info.getType(), info.getSubtype()};
+
+        return new int[]{-1, -1};
     }
 
     /**

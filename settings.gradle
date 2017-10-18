@@ -1,1 +1,1 @@
-include ':app', ':networkmanager'
+include ':app', ':networkmanager', ':networkmanager-livedata', ':networkmanager-rxjava'

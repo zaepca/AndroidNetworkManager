@@ -1,7 +1,7 @@
 package com.androidstudy.networkmanager;
 
 import android.content.Context;
-import android.util.Log;
+import android.support.annotation.Nullable;
 
 import com.androidstudy.networkmanager.internal.DefaultMonitorFactory;
 
@@ -18,12 +18,25 @@ public class Tovuti {
     private static final Object lock = new Object();
 
     private static volatile Tovuti tovuti;
+    private MonitorFactory factory;
     private WeakReference<Context> contextRef;
     private Set<Monitor> monitors;
 
-    private Tovuti(Context context) {
-        monitors = new HashSet<>();
+    private Tovuti(Context context, @Nullable MonitorFactory factory) {
+        this.factory = factory;
         this.contextRef = new WeakReference<>(context);
+
+        monitors = new HashSet<>();
+
+        if (this.factory == null) this.factory = new DefaultMonitorFactory();
+    }
+
+    private Tovuti(Context context) {
+        this(context, null);
+    }
+
+    public static Builder builder(Context context) {
+        return new Builder(context);
     }
 
     public static Tovuti from(Context context) {
@@ -40,7 +53,7 @@ public class Tovuti {
     public Tovuti monitor(int connectionType, Monitor.ConnectivityListener listener) {
         Context context = contextRef.get();
         if (context != null)
-            monitors.add(new DefaultMonitorFactory().create(context, connectionType, listener));
+            monitors.add(factory.create(context, connectionType, listener));
 
         start();
         return tovuti;
@@ -54,14 +67,29 @@ public class Tovuti {
         for (Monitor monitor : monitors) {
             monitor.onStart();
         }
-
-        if (monitors.size() > 0)
-            Log.i(TAG, "started tovuti");
     }
 
     public void stop() {
         for (Monitor monitor : monitors) {
             monitor.onStop();
+        }
+    }
+
+    public static class Builder {
+        private MonitorFactory factory;
+        private Context context;
+
+        public Builder(Context context) {
+            this.context = context;
+        }
+
+        public Builder factory(MonitorFactory factory) {
+            this.factory = factory;
+            return this;
+        }
+
+        public Tovuti build() {
+            return new Tovuti(context, factory);
         }
     }
 }

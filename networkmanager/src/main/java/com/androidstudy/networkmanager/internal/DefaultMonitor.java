@@ -7,9 +7,10 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.NetworkUtil;
+import com.androidstudy.networkmanager.Status;
 
 /**
  * Created by chweya on 29/08/17.
@@ -36,22 +37,21 @@ public class DefaultMonitor implements Monitor {
         }
     };
 
-    public DefaultMonitor(Context context, ConnectivityListener listener, int connectionType) {
+    public DefaultMonitor(Context context, int connectionType, ConnectivityListener listener) {
         this.context = context;
         this.listener = listener;
         this.connectionType = connectionType;
     }
 
     public DefaultMonitor(Context context, ConnectivityListener listener) {
-        this(context, listener, -1);
+        this(context, -1, listener);
     }
 
     private void emitEvent() {
-        Log.i("Monitor", "Network change");
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
-                listener.onConnectivityChanged(connectionType, isConnected, isConnected && NetworkUtil.isConnectionFast(context));
+                listener.onConnectivityChanged(new Status(isConnected, connectionType, isConnected && NetworkUtil.isConnectionFast(context)));
             }
         });
     }
@@ -61,9 +61,8 @@ public class DefaultMonitor implements Monitor {
             return;
         }
 
-        Log.i("Monitor", "Registering");
         isConnected = NetworkUtil.isConnected(context, connectionType);
-        //emit once
+        //emit last event
         emitEvent();
         context.registerReceiver(
                 connectivityReceiver,
@@ -77,7 +76,6 @@ public class DefaultMonitor implements Monitor {
             return;
         }
 
-        Log.i("Monitor", "Unregistering");
         context.unregisterReceiver(connectivityReceiver);
         isRegistered = false;
     }

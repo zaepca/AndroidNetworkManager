@@ -7,6 +7,6 @@ package com.androidstudy.networkmanager;
 public interface Monitor extends LifecycleListener {
 
     interface ConnectivityListener {
-        void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast);
+        void onConnectivityChanged(Status status);
     }
 }

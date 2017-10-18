@@ -26,7 +26,7 @@ public class DefaultMonitorFactory implements MonitorFactory {
         int permissionResult = ContextCompat.checkSelfPermission(context, ACCESS_NETWORK_PERMISSION);
         boolean hasPermission = permissionResult == PackageManager.PERMISSION_GRANTED;
 
-        return hasPermission ? new DefaultMonitor(context, listener, connectionType)
+        return hasPermission ? new DefaultMonitor(context, connectionType, listener)
                 : new NoopMonitor();
     }
 }
