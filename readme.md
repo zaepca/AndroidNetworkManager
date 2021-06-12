@@ -1,4 +1,23 @@
-# Android Network Manager
+if (NetworkManager.isConnected(this)) {
+            /**
+             * Internet is available
+             */
+            Toast.makeText(this, "Mobile Networks connect| WiFi Connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this,  Mobile Networks connect | WiFi Connected!", Toast.LENGTH_SHORT).show();
+        }
+
+<dependency>
+  <groupId>com.github.jumadeveloper</groupId>
+  <artifactId>networkmanager</artifactId>
+  <version>0.0.1</version>
+  <type>pom</type>
+</dependency>
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+compile 'com.github.jumadeveloper:networkmanager:0.0.1'
+
 
 ![Androd Network Manager](https://i0.wp.com/androidstudy.com/wp-content/uploads/2017/04/Website-Android-Development-Banner.jpg?resize=750%2C410)
 
