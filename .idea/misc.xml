@@ -4,8 +4,8 @@
     <entry_points version="2.0" />
   </component>
   <component name="NullableNotNullManager">
-    <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
-    <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
+    <option name="myDefaultNullable" value="android.support.annotation.100" />
+    <option name="myDefaultNotNull" value="android.support.annotation.100" />
     <option name="myNullables">
       <value>
         <list size="4">
@@ -16,7 +16,7 @@
         </list>
       </value>
     </option>
-    <option name="myNotNulls">
+    <option name="myNot100">
       <value>
         <list size="4">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
